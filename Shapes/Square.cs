@@ -18,10 +18,10 @@ namespace ProjektarbeteV2
 
         public bool IsPointInside(Point point)
         {
-            double yMax = (O / 8) + point.Y; 
-            double yMin = (O / 8) - point.Y; 
-            double xMax = (O / 8) + point.X; 
-            double xMin = (O / 8) - point.X; 
+            double yMax = (O / 8) + Y; 
+            double yMin = (O / 8) - Y; 
+            double xMax = (O / 8) + X; 
+            double xMin = (O / 8) - X; 
 
             return point.Y <= yMax && point.Y >= yMin && point.X <= xMax && point.X >= xMin;
         }
