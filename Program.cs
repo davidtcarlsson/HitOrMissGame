@@ -18,6 +18,5 @@ namespace ProjektarbeteV2
             HitOrMissGame game = new HitOrMissGame(testArgs);
             game.Start();
         }
-
     }
 }
