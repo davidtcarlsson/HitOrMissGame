@@ -29,6 +29,5 @@ namespace ProjektarbeteV2
         {
             return typeName;
         }
-
     }
 }

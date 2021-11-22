@@ -5,7 +5,7 @@ namespace ProjektarbeteV2
 {
     class Triangle : IShape
     {
-        public string typeName = "CIRCLE";
+        public string typeName = "TRIANGLE";
         public int X { get; private set; }
         public int Y { get; private set; }
         public int O { get; private set; }
@@ -18,17 +18,17 @@ namespace ProjektarbeteV2
 
         public bool IsPointInside(Point point)
         {
+            // NOT ADDED
             return true;
         }
 
         public double GetArea() {
-            return 1.0;
+            return Math.Pow(O / 3, 2) * Math.Sqrt(3) / 4; 
         }
 
         public string GetName() 
         {
             return typeName;
         }
-
     }
 }
