@@ -5,25 +5,20 @@ namespace ProjektarbeteV2
 {
     class HitOrMissGame
     {
-        public Dictionary<string, int> ShapeScore = new Dictionary<string, int>();
-        public List<IShape> Shapes = new List<IShape>();
-        public List<Point> Points = new List<Point>();
+        public Dictionary<string, int> ShapeScore { get; private set; }
+        public List<IShape> Shapes { get; private set; }
+        public List<Point> Points { get; private set; }
 
         public HitOrMissGame(string[] args) 
         {
-            AddPoints(RemoveWhitespace(args[0]));
-            AddShapes(RemoveWhitespace(args[1]));
-            AddShapeScores(RemoveWhitespace(args[2]));
+            Points = GetPoints(RemoveWhitespace(args[0]));
+            Shapes = GetShapes(RemoveWhitespace(args[1]));
+            ShapeScore = GetShapeScores(RemoveWhitespace(args[2]));
         }
 
-        public void Start() 
+        public List<IShape> GetShapes(string input) 
         {
-            // Prints out the rounded score
-            System.Console.WriteLine(Math.Round(GetScore(), 0));
-        }
-
-        public void AddShapes(string input) 
-        {
+            List<IShape> shapes = new List<IShape>();
             foreach (string s in input.Split(";"))
             {
                 string[] shapeArgs = s.Split(",");
@@ -41,19 +36,21 @@ namespace ProjektarbeteV2
                 switch (shapeType)
                 {
                     case "CIRCLE":
-                        Shapes.Add(new Circle(shapeParams));
+                        shapes.Add(new Circle(shapeParams));
                         break;
                     case "SQUARE":
-                        Shapes.Add(new Square(shapeParams));
+                        shapes.Add(new Square(shapeParams));
                         break;
                     default:
                         break;
                 }
             }
+            return shapes;
         }
 
-        public void AddPoints(string input) 
+        public List<Point> GetPoints(string input) 
         {
+            List<Point> points = new List<Point>();
             foreach (string s in input.Split(";"))
             {
                 List<int> pointArgs = new List<int>();
@@ -64,17 +61,20 @@ namespace ProjektarbeteV2
                         pointArgs.Add(Int32.Parse(k));
                     }
                 }
-                Points.Add(new Point(pointArgs));
+                points.Add(new Point(pointArgs));
             }
+            return points;
         }
 
-        public void AddShapeScores(string input) 
+        public Dictionary<string, int> GetShapeScores(string input) 
         {
+            Dictionary<string, int> shapeScore = new Dictionary<string, int>();
             foreach (string s in input.Split(";"))
             {
                 string[] shapeScoreArgs = s.Split(",");
-                ShapeScore.Add(shapeScoreArgs[0], Int32.Parse(shapeScoreArgs[1]));
+                shapeScore.Add(shapeScoreArgs[0], Int32.Parse(shapeScoreArgs[1]));
             }
+            return shapeScore;
         }
 
         public double GetScore() 
