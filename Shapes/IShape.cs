@@ -1,13 +1,10 @@
-using System;
 
 namespace ProjektarbeteV2
 {
     public interface IShape
     {
-        // Type -> För att få fram ShapeScore
-        // Area
-        double GetArea();
+        double Area { get; }
+        string Name { get; }
         bool IsPointInside(Point point);
-        string GetName();
     }
 }

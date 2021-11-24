@@ -86,10 +86,10 @@ namespace ProjektarbeteV2
                 {
                     if (s.IsPointInside(p))
                     {
-                        score += s.GetArea() * ShapeScore[s.GetName()];
+                        score += s.Area * ShapeScore[s.Name];
                     } else
                     {
-                        score += (p.PointScore * ShapeScore[s.GetName()]) / 4;
+                        score += (p.PointScore * ShapeScore[s.Name]) / 4;
                     }
                 }
             }

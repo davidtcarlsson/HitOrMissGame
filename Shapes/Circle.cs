@@ -5,10 +5,11 @@ namespace ProjektarbeteV2
 {
     class Circle : IShape
     {
-        public string typeName = "CIRCLE";
+        public string Name { get; } = "CIRCLE";
         public int X { get; private set; }
         public int Y { get; private set; }
         public int O { get; private set; }
+        public double Area { get => Math.Pow(O, 2) / (4 * Math.PI); }
 
         public Circle(List<int> args) {
             X = args[0];
@@ -19,15 +20,6 @@ namespace ProjektarbeteV2
         public bool IsPointInside(Point point)
         {
             return Math.Pow(point.X - X, 2) + Math.Pow(point.Y - Y, 2) <= Math.Pow(O, 2) / (4 * Math.Pow(Math.PI, 2));
-        }
-
-        public double GetArea() {
-            return Math.Pow(O, 2) / (4 * Math.PI);
-        }
-
-        public string GetName() 
-        {
-            return typeName;
         }
     }
 }
