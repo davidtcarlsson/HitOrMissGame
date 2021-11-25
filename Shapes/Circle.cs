@@ -6,9 +6,9 @@ namespace ProjektarbeteV2
     class Circle : IShape
     {
         public string Name { get; } = "CIRCLE";
-        public int X { get; private set; }
-        public int Y { get; private set; }
-        public int O { get; private set; }
+        public double X { get; private set; }
+        public double Y { get; private set; }
+        public double O { get; private set; }
         public double Area { get => Math.Pow(O, 2) / (4 * Math.PI); }
 
         public Circle(List<int> args) {
