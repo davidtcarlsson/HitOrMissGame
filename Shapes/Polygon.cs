@@ -1,110 +1,110 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjektarbeteV2
 {
 	class Polygon : IShape
 	{
-        public string Name { get; private set; } = "POLYGON";
-        public double Area { get => (sLength * sLength * sides) / (double)(4 * Math.Tan((180 / sides) *  Math.PI / 180)); }
-        public int X { get; private set; }
-        public int Y { get; private set; }
-        public int O { get; private set; }
-        public int sides{ get; private set; }
-        public int sLength{ get; private set; }
-        public double angles { get; private set; }
-        public double offset { get; private set; }
-        public double circumradius { get; private set; }
-        public List<List<double>> Vertices = new List<List<double>>();
+        public string Name { get; private set; }
+        public double Area { get => (Math.Pow(SideLength, 2) * NumSides) / (4 * Math.Tan(Math.PI / NumSides)); }
+        public double X { get; private set; }
+        public double Y { get; private set; }
+        public double O { get; private set; }
+        public double NumSides{ get; private set; }
+        public double SideLength{ get; private set; }
+        public double Angles { get; private set; }
+        public double Offset { get; private set; }
+        public double Circumradius { get =>  SideLength / 2 * Math.Sin(Math.PI / NumSides); }
+        public List<Point> Vertices {get; private set; } = new List<Point>();
+
         public double XCorner;
         public double YCorner;
-        public Polygon(List<int> args)
+        public Polygon(string name, List<int> args)
         {
             X = args[0];
             Y = args[1];
             O = args[2];
-
+            Name = name;
+            NumOfSides(Name);
+            GetVertices();
         }
 
         public bool IsPointInside(Point point)
         {
-            bool IsHit = false;
-			for (int i = 0; i < sides -1; i++)
-			{
-				/*
-                if (Vertices[i])
-				{
-
-				}
-                */
-			}
-            return true;
+            bool result = false;
+            int j = Vertices.Count - 1;
+            for (int i = 0; i < Vertices.Count; i++)
+            {
+                if (Vertices[i].Y < point.Y && Vertices[j].Y >= point.Y || Vertices[j].Y < point.Y && Vertices[i].Y >= point.Y)
+                {
+                    if (Vertices[i].X + (point.Y - Vertices[i].Y) / (Vertices[j].Y - Vertices[i].Y) * (Vertices[j].X - Vertices[i].X) < point.X)
+                    {
+                        result = !result;
+                    }
+                }
+                j = i;
+            }
+            return result;
         }
-        public void NumOfSides(string type)
+
+        public void NumOfSides(string name)
         {
             switch (Name)
             {
                 case "TRIANGLE":
-                    Name = Name; 
-                    sides = 3;
-                    sLength = O / 3;
+                    NumSides = 3;
+                    SideLength = O / 3;
                     break;
                 case "SQUARE":
-                    sides = 4;
-                    sLength = O / 4;
+                    NumSides = 4;
+                    SideLength = O / 4;
                     break;
                 case "PENTAGON":
-                    sides = 5;
-                    sLength = O / 5;
+                    NumSides = 5;
+                    SideLength = O / 5;
                     break;
                 case "HEXAGON":
-                    sides = 6;
-                    sLength = O / 6;
+                    NumSides = 6;
+                    SideLength = O / 6;
                     break;
                 case "HEPTAGON":
-                    sides = 7;
-                    sLength = O / 7;
+                    NumSides = 7;
+                    SideLength = O / 7;
                     break;
                 case "OCTAGON":
-                    sides = 8;
-                    sLength = O / 8;
+                    NumSides = 8;
+                    SideLength = O / 8;
                     break;
                 default:
                     Console.WriteLine("Error");
                     break;
             }
         }
-        public void CircumRadiusCalc()
-        {
-            circumradius = sLength / 2 * Math.Sin(Math.PI / sides);
-        
-        }
+      
         public void GetVertices()
         {
-            angles = Math.PI * 2 / sides;
-			if (sides % 2 == 0)
+            // Vinkel i radianer
+            Angles = (2 * Math.PI) / NumSides;
+			if (NumSides % 2 == 0)
 			{
-                offset = angles / 2;
+                Offset = Angles / 2;
 			}
 			else
 			{
-                offset = 0;
+                Offset = 0;
 			}
 
-			for (int i = 0; i < sides; i++)
+			for (int i = 0; i < NumSides; i++)
 			{
-               XCorner = (X + circumradius * Math.Sin(i * angles + offset));
+                XCorner = (X + Circumradius * Math.Sin(i * Angles + Offset));
+                YCorner = (Y + Circumradius * Math.Cos(i * Angles + Offset));
 
-               YCorner = (Y + circumradius * Math.Cos(i * angles + offset));
-                List<double> XY = new List<double>();
-                XY.Add(XCorner);
-                XY.Add(YCorner);
-                Vertices.Insert(i, XY);
-                XY.Remove(XCorner);
-                XY.Remove(YCorner);
+                // Creating a list that will be used to create a point object
+                List<double> pointArgs = new List<double>();
+                pointArgs.Add(XCorner);
+                pointArgs.Add(YCorner);
+                pointArgs.Add(0);
+                Vertices.Add(new Point(pointArgs));
             }
         }
     }
