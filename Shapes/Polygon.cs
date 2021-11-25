@@ -9,7 +9,7 @@ namespace ProjektarbeteV2
 	class Polygon : IShape
 	{
         public string Name { get; private set; } = "POLYGON";
-        public double Area { get; } // Ej inlagd
+        public double Area { get => (sLength * sLength * sides) / (double)(4 * Math.Tan((180 / sides) *  Math.PI / 180)); }
         public int X { get; private set; }
         public int Y { get; private set; }
         public int O { get; private set; }
