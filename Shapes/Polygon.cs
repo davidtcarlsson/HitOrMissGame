@@ -12,7 +12,6 @@ namespace ProjektarbeteV2
         public double O { get; private set; }
         public double NumSides{ get; private set; }
         public double SideLength{ get => O / NumSides; }
-        public double Circumradius { get =>  SideLength / 2 * Math.Sin(Math.PI / NumSides); }
         public List<Point> Vertices { get; private set; } 
 
         public Polygon(string name, List<double> args)
@@ -68,25 +67,22 @@ namespace ProjektarbeteV2
         public List<Point> GetVertices()
         {
             List<Point> vertices = new List<Point>();
-            double xCorner;
-            double yCorner;
-            double Angles = (2 * Math.PI) / NumSides;
-            double Offset;
-
             // Vinkel i radianer
-			if (NumSides % 2 == 0)
-			{
-                Offset = Angles / 2;
-			}
-			else
-			{
-                Offset = 0;
-			}
+            double angles = (2 * Math.PI) / NumSides;
+            double sideLength = O / NumSides;
+            double xCorner, yCorner;
+            double circumradius = SideLength / 2 * Math.Sin(Math.PI / NumSides);
+            double offset = 0;
+            
+            if (NumSides % 2 == 0)
+            {
+                offset = angles / 2;
+            }
 
 			for (int i = 0; i < NumSides; i++)
 			{
-                xCorner = (X + Circumradius * Math.Sin(i * Angles + Offset));
-                yCorner = (Y + Circumradius * Math.Cos(i * Angles + Offset));
+                xCorner = (X + circumradius * Math.Sin(i * angles + offset));
+                yCorner = (Y + circumradius * Math.Cos(i * angles + offset));
 
                 // Creating a list that will be used to create a point object
                 List<double> pointArgs = new List<double>();
