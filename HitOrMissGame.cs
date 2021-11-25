@@ -43,7 +43,23 @@ namespace ProjektarbeteV2
                         case "SQUARE":
                             shapes.Add(new Square(shapeParams));
                             break;
+                        case "TRIANGLE":
+
+                            break;
+                        case "PENTAGON":
+
+                            break;
+                        case "HEXAGON":
+
+                            break;
+                        case "HEPTAGON":
+
+                            break;
+                        case "OCTAGON":
+
+                            break;
                         default:
+                            
                             break;
                     }
                 }
