@@ -18,6 +18,7 @@ namespace ProjektarbeteV2
 
         public List<IShape> GetShapes(string input) 
         {
+            // Lägg till try catch sist
             List<IShape> shapes = new List<IShape>();
             foreach (string s in input.Split(";"))
             {
@@ -44,7 +45,7 @@ namespace ProjektarbeteV2
                             shapes.Add(new Square(shapeParams));
                             break;
                         case "TRIANGLE":
-
+                            shapes.Add(new Polygon(shapeType, shapeParams));
                             break;
                         case "PENTAGON":
 
@@ -69,15 +70,16 @@ namespace ProjektarbeteV2
 
         public List<Point> GetPoints(string input) 
         {
+            // Lägg till try catch sist
             List<Point> points = new List<Point>();
             foreach (string s in input.Split(";"))
             {
-                List<int> pointArgs = new List<int>();
+                List<double> pointArgs = new List<double>();
                 foreach (string k in s.Split(","))
                 {
                     if (!String.IsNullOrWhiteSpace(k))
                     {
-                        pointArgs.Add(Int32.Parse(k));
+                        pointArgs.Add(Double.Parse(k));
                     }
                 }
                 if (pointArgs.Count == 3)
@@ -104,6 +106,7 @@ namespace ProjektarbeteV2
 
         public double GetScore() 
         {
+            // Lägg till try catch sist
             double score = 0;
             foreach (IShape s in Shapes)
             {
