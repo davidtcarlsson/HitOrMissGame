@@ -86,9 +86,6 @@ namespace ProjektarbeteV2
                     if (!String.IsNullOrWhiteSpace(k) && Double.TryParse(k, out double n))
                     {
                         pointArgs.Add(n);
-                    } else
-                    {
-                        System.Console.WriteLine("Something is wrong here!!!");
                     }
                 }
                 if (pointArgs.Count == 3)
