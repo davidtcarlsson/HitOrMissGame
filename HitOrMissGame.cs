@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace ProjektarbeteV2
 {
     class HitOrMissGame
     {
-        public Dictionary<string, int> ShapeScore { get; private set; }
+        public Dictionary<string, double> ShapeScore { get; private set; }
         public List<IShape> Shapes { get; private set; }
         public List<Point> Points { get; private set; }
 
@@ -18,20 +19,22 @@ namespace ProjektarbeteV2
 
         public List<IShape> GetShapes(string input) 
         {
+            var format = new NumberFormatInfo();
+            format.NegativeSign = "-";
             // Lägg till try catch sist
             List<IShape> shapes = new List<IShape>();
             foreach (string s in input.Split(";"))
             {
                 string[] shapeArgs = s.Split(",");
                 string shapeType = shapeArgs[0];
-                List<int> shapeParams = new List<int>();
+                List<double> shapeParams = new List<double>();
 
                 for (int i = 1; i < shapeArgs.Length; i++)
                 {
-                    if (!String.IsNullOrWhiteSpace(shapeArgs[i]))
+                    if (!String.IsNullOrWhiteSpace(shapeArgs[i]) && Double.TryParse(shapeArgs[i], NumberStyles.AllowLeadingSign, format, out double n))
                     {
-                        shapeParams.Add(Int32.Parse(shapeArgs[i]));
-                    }
+                        shapeParams.Add(n);
+                    } 
                 }
 
                 if (shapeParams.Count == 3)
@@ -41,26 +44,26 @@ namespace ProjektarbeteV2
                         case "CIRCLE":
                             shapes.Add(new Circle(shapeParams));
                             break;
-                        case "SQUARE":
-                            shapes.Add(new Square(shapeParams));
-                            break;
                         case "TRIANGLE":
                             shapes.Add(new Polygon(shapeType, shapeParams));
                             break;
+                        case "SQUARE":
+                            shapes.Add(new Polygon(shapeType, shapeParams));
+                            break;
                         case "PENTAGON":
-
+                            shapes.Add(new Polygon(shapeType, shapeParams));
                             break;
                         case "HEXAGON":
-
+                            shapes.Add(new Polygon(shapeType, shapeParams));
                             break;
                         case "HEPTAGON":
-
+                            shapes.Add(new Polygon(shapeType, shapeParams));
                             break;
                         case "OCTAGON":
-
+                            shapes.Add(new Polygon(shapeType, shapeParams));
                             break;
                         default:
-                            
+                            // Felhantering
                             break;
                     }
                 }
@@ -77,9 +80,12 @@ namespace ProjektarbeteV2
                 List<double> pointArgs = new List<double>();
                 foreach (string k in s.Split(","))
                 {
-                    if (!String.IsNullOrWhiteSpace(k))
+                    if (!String.IsNullOrWhiteSpace(k) && Double.TryParse(k, out double n))
                     {
-                        pointArgs.Add(Double.Parse(k));
+                        pointArgs.Add(n);
+                    } else
+                    {
+                        System.Console.WriteLine("Something is wrong here!!!");
                     }
                 }
                 if (pointArgs.Count == 3)
@@ -90,15 +96,15 @@ namespace ProjektarbeteV2
             return points;
         }
 
-        public Dictionary<string, int> GetShapeScores(string input) 
+        public Dictionary<string, double> GetShapeScores(string input) 
         {
-            Dictionary<string, int> shapeScore = new Dictionary<string, int>();
+            Dictionary<string, double> shapeScore = new Dictionary<string, double>();
             foreach (string s in input.Split(";"))
             {
                 string[] shapeScoreArgs = s.Split(",");
                 if (shapeScoreArgs.Length == 2)
                 {
-                    shapeScore.Add(shapeScoreArgs[0], Int32.Parse(shapeScoreArgs[1]));
+                    shapeScore.Add(shapeScoreArgs[0], Double.Parse(shapeScoreArgs[1]));
                 }
             }
             return shapeScore;
