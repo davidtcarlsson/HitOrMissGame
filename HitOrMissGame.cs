@@ -40,8 +40,7 @@ namespace ProjektarbeteV2
                     } 
                 }
 
-                // Check the that shapeParams is not just an empty list
-                if (shapeParams.Count == 3)
+                try
                 {
                     switch (shapeType)
                     {
@@ -67,9 +66,20 @@ namespace ProjektarbeteV2
                             shapes.Add(new Polygon(shapeType, shapeParams));
                             break;
                         default:
-                            throw new Exception();
+                            throw new ArgumentOutOfRangeException();
                     }
                 }
+                catch (ArgumentOutOfRangeException)
+                {
+                    Console.WriteLine("Your input for the shapes is incorrect.");
+                    Console.WriteLine("It should follow this format: SHAPE, X, Y, PERIMETER.");
+                    Console.WriteLine("Each point should also be separated with a ‘;’\n");
+                    Console.Write("Press ENTER to exit the program.");
+                    Console.ReadLine();
+                    System.Environment.Exit(0);
+                    throw;
+                }
+                
             }
             return shapes;
         }
