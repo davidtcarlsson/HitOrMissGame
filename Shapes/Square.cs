@@ -6,9 +6,9 @@ namespace ProjektarbeteV2
     class Square : IShape
     {
         public string Name { get; } = "SQUARE";
-        public int X { get; private set; }
-        public int Y { get; private set; }
-        public int O { get; private set; }
+        public double X { get; private set; }
+        public double Y { get; private set; }
+        public double O { get; private set; }
         public double Area { get => Math.Pow(O / 4, 2); }
 
         public Square(List<int> args) {
@@ -19,10 +19,10 @@ namespace ProjektarbeteV2
 
         public bool IsPointInside(Point point)
         {
-            double yMax = (O / 8) + Y; 
-            double yMin = (O / 8) - Y; 
-            double xMax = (O / 8) + X; 
-            double xMin = (O / 8) - X; 
+            double yMax = Y - (O / 8); 
+            double yMin = Y - (O / 8); 
+            double xMax = X - (O / 8); 
+            double xMin = X - (O / 8); 
             return point.Y <= yMax && point.Y >= yMin && point.X <= xMax && point.X >= xMin;
         }
     }

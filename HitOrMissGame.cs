@@ -33,16 +33,19 @@ namespace ProjektarbeteV2
                     }
                 }
 
-                switch (shapeType)
+                if (shapeParams.Count == 3)
                 {
-                    case "CIRCLE":
-                        shapes.Add(new Circle(shapeParams));
-                        break;
-                    case "SQUARE":
-                        shapes.Add(new Square(shapeParams));
-                        break;
-                    default:
-                        break;
+                    switch (shapeType)
+                    {
+                        case "CIRCLE":
+                            shapes.Add(new Circle(shapeParams));
+                            break;
+                        case "SQUARE":
+                            shapes.Add(new Square(shapeParams));
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
             return shapes;
@@ -61,7 +64,10 @@ namespace ProjektarbeteV2
                         pointArgs.Add(Int32.Parse(k));
                     }
                 }
-                points.Add(new Point(pointArgs));
+                if (pointArgs.Count == 3)
+                {
+                    points.Add(new Point(pointArgs));
+                }
             }
             return points;
         }
@@ -72,7 +78,10 @@ namespace ProjektarbeteV2
             foreach (string s in input.Split(";"))
             {
                 string[] shapeScoreArgs = s.Split(",");
-                shapeScore.Add(shapeScoreArgs[0], Int32.Parse(shapeScoreArgs[1]));
+                if (shapeScoreArgs.Length == 2)
+                {
+                    shapeScore.Add(shapeScoreArgs[0], Int32.Parse(shapeScoreArgs[1]));
+                }
             }
             return shapeScore;
         }
