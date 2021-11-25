@@ -4,9 +4,9 @@ namespace ProjektarbeteV2
 {
     public class Point
     {
-        public int X { get; private set; }
-        public int Y { get; private set; }
-        public int PointScore { get; private set; }
+        public double X { get; private set; }
+        public double Y { get; private set; }
+        public double PointScore { get; private set; }
 
         public Point(List<int> args) 
         {
