@@ -19,6 +19,8 @@ namespace ProjektarbeteV2
 
         public List<IShape> GetShapes(string input) 
         {
+            // Define the numberFormatInfo so that we are able to convert negative nums to double
+            // For example "-20" to -20
             var format = new NumberFormatInfo();
             format.NegativeSign = "-";
             // Lägg till try catch sist
@@ -37,6 +39,7 @@ namespace ProjektarbeteV2
                     } 
                 }
 
+                // Check the that shapeParams is not just an empty list
                 if (shapeParams.Count == 3)
                 {
                     switch (shapeType)
