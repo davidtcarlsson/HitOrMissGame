@@ -11,7 +11,7 @@ namespace ProjektarbeteV2
         public double O { get; private set; }
         public double Area { get => Math.Pow(O, 2) / (4 * Math.PI); }
 
-        public Circle(List<int> args) {
+        public Circle(List<double> args) {
             X = args[0];
             Y = args[1];
             O = args[2];

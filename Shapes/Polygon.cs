@@ -19,7 +19,7 @@ namespace ProjektarbeteV2
 
         public double XCorner;
         public double YCorner;
-        public Polygon(string name, List<int> args)
+        public Polygon(string name, List<double> args)
         {
             X = args[0];
             Y = args[1];
