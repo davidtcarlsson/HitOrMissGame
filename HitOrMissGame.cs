@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace ProjektarbeteV2
 {
@@ -66,8 +67,7 @@ namespace ProjektarbeteV2
                             shapes.Add(new Polygon(shapeType, shapeParams));
                             break;
                         default:
-                            // Felhantering
-                            break;
+                            throw new Exception();
                     }
                 }
             }
@@ -76,21 +76,25 @@ namespace ProjektarbeteV2
 
         public List<Point> GetPoints(string input) 
         {
-            // Lägg till try catch sist
             List<Point> points = new List<Point>();
-            foreach (string s in input.Split(";"))
+            // Split the input and remove the empty elements.
+            string[] splitInput = input.Split(";").Where(x => !string.IsNullOrEmpty(x)).ToArray();
+            foreach (string s in splitInput)
             {
-                List<double> pointArgs = new List<double>();
-                foreach (string k in s.Split(","))
+                String[] pointArgs = s.Split(",");
+                try
                 {
-                    if (!String.IsNullOrWhiteSpace(k) && Double.TryParse(k, out double n))
-                    {
-                        pointArgs.Add(n);
-                    }
+                    // Convert the string array to a List<double> and create a new Point object. 
+                    points.Add(new Point(pointArgs.Select(x => Double.Parse(x)).ToList())); 
                 }
-                if (pointArgs.Count == 3)
+                catch (ArgumentOutOfRangeException)
                 {
-                    points.Add(new Point(pointArgs));
+                    Console.WriteLine("Your input for the points is incorrect.");
+                    Console.WriteLine("It should follow this format: X, Y, SCORE.");
+                    Console.WriteLine("Each point should also be separated with a ‘;’\n");
+                    Console.Write("Press ENTER to exit the program.");
+                    Console.ReadLine();
+                    System.Environment.Exit(0);
                 }
             }
             return points;
