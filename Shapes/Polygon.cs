@@ -11,22 +11,18 @@ namespace ProjektarbeteV2
         public double Y { get; private set; }
         public double O { get; private set; }
         public double NumSides{ get; private set; }
-        public double SideLength{ get; private set; }
-        public double Angles { get; private set; }
-        public double Offset { get; private set; }
+        public double SideLength{ get => O / NumSides; }
         public double Circumradius { get =>  SideLength / 2 * Math.Sin(Math.PI / NumSides); }
-        public List<Point> Vertices {get; private set; } = new List<Point>();
+        public List<Point> Vertices { get; private set; } 
 
-        public double XCorner;
-        public double YCorner;
         public Polygon(string name, List<double> args)
         {
             X = args[0];
             Y = args[1];
             O = args[2];
             Name = name;
-            NumOfSides(Name);
-            GetVertices();
+            NumSides = GetNumSides();
+            Vertices = GetVertices();
         }
 
         public bool IsPointInside(Point point)
@@ -47,44 +43,37 @@ namespace ProjektarbeteV2
             return result;
         }
 
-        public void NumOfSides(string name)
+        public double GetNumSides()
         {
             switch (Name)
             {
                 case "TRIANGLE":
-                    NumSides = 3;
-                    SideLength = O / 3;
-                    break;
+                    return 3;
                 case "SQUARE":
-                    NumSides = 4;
-                    SideLength = O / 4;
-                    break;
+                    return 4;
                 case "PENTAGON":
-                    NumSides = 5;
-                    SideLength = O / 5;
-                    break;
+                    return 5;
                 case "HEXAGON":
-                    NumSides = 6;
-                    SideLength = O / 6;
-                    break;
+                    return 6;
                 case "HEPTAGON":
-                    NumSides = 7;
-                    SideLength = O / 7;
-                    break;
+                    return 7;
                 case "OCTAGON":
-                    NumSides = 8;
-                    SideLength = O / 8;
-                    break;
+                    return 8;
                 default:
                     Console.WriteLine("Error");
-                    break;
+                    return 0;
             }
         }
       
-        public void GetVertices()
+        public List<Point> GetVertices()
         {
+            List<Point> vertices = new List<Point>();
+            double xCorner;
+            double yCorner;
+            double Angles = (2 * Math.PI) / NumSides;
+            double Offset;
+
             // Vinkel i radianer
-            Angles = (2 * Math.PI) / NumSides;
 			if (NumSides % 2 == 0)
 			{
                 Offset = Angles / 2;
@@ -96,16 +85,17 @@ namespace ProjektarbeteV2
 
 			for (int i = 0; i < NumSides; i++)
 			{
-                XCorner = (X + Circumradius * Math.Sin(i * Angles + Offset));
-                YCorner = (Y + Circumradius * Math.Cos(i * Angles + Offset));
+                xCorner = (X + Circumradius * Math.Sin(i * Angles + Offset));
+                yCorner = (Y + Circumradius * Math.Cos(i * Angles + Offset));
 
                 // Creating a list that will be used to create a point object
                 List<double> pointArgs = new List<double>();
-                pointArgs.Add(XCorner);
-                pointArgs.Add(YCorner);
+                pointArgs.Add(xCorner);
+                pointArgs.Add(yCorner);
                 pointArgs.Add(0);
-                Vertices.Add(new Point(pointArgs));
+                vertices.Add(new Point(pointArgs));
             }
+            return vertices;
         }
     }
 }
