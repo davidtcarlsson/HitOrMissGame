@@ -40,14 +40,15 @@ namespace ProjektarbeteV2
                 string[] shapeArgs = s.Split(",");
                 string shapeName = shapeArgs[0];
                 List<double> shapeParams = new List<double>();
-                for (int i = 1; i < shapeArgs.Length; i++)
-                {    
-                    // Loop through and add the parameters to the list (Skipping the first one)
-                    shapeParams.Add(Double.Parse(shapeArgs[i], NumberStyles.AllowLeadingSign, format));
-                }
 
                 try
                 {
+                    for (int i = 1; i < shapeArgs.Length; i++)
+                    {    
+                        // Loop through and add the parameters to the list (Skipping the first one)
+                        shapeParams.Add(Double.Parse(shapeArgs[i], NumberStyles.AllowLeadingSign, format));
+                    }
+                    
                         switch (shapeName)
                     {
                         case "CIRCLE":
@@ -75,7 +76,7 @@ namespace ProjektarbeteV2
                             throw new ArgumentOutOfRangeException();
                     }
                 }
-                catch (System.Exception)
+                catch (ArgumentOutOfRangeException)
                 {
                     Console.WriteLine("Your input for the shapes is incorrect.");
                     Console.WriteLine("It should follow this format: SHAPE, X, Y, PERIMETER.");
